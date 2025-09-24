@@ -1,0 +1,43 @@
+package a.syrov;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Bar bar = new Bar();
+
+        bar.addIngredient("Rum", 50);
+        bar.addIngredient("Vodka", 50);
+        bar.addIngredient("Cola", 200);
+        bar.addIngredient("Mint", 30);
+        bar.addIngredient("Sugar", 20);
+        bar.addIngredient("Juice", 40);
+        bar.addIngredient("Milk", 30);
+
+        Map<String, Integer> mojitoRecipe = new HashMap<>();
+        mojitoRecipe.put("Rum", 10);
+        mojitoRecipe.put("Mint", 5);
+        mojitoRecipe.put("Sugar", 3);
+        mojitoRecipe.put("Cola", 50);
+        bar.addCocktail(new Cocktails("Mojito", mojitoRecipe));
+
+        Map<String, Integer> pinaColadaRecipe = new HashMap<>();
+        pinaColadaRecipe.put("Rum", 15);
+        pinaColadaRecipe.put("Juice", 20);
+        pinaColadaRecipe.put("Milk", 10);
+        bar.addCocktail(new Cocktails("Pina Colada", pinaColadaRecipe));
+
+        System.out.println("Добро пожаловать в бар 'У Энтони'!");
+        System.out.println("На складе уже есть ингредиенты и рецепты.\n");
+
+        System.out.println("=== Начальный склад ===");
+        bar.listStock();
+
+        System.out.println("\n=== Доступные рецепты ===");
+        bar.listCocktails();
+
+        MainMenu menu = new MainMenu(scanner, bar);
+        menu.show();
+    }
+}
