@@ -1,9 +1,10 @@
 package a.syrov;
 
+//import java.sql.SQLOutput;
 import java.util.*;
 
 public class Bar {
-    private Map<String, Integer> stock = new HashMap<>();
+    // private Map<String, Integer> stock = new HashMap<>();
     private List<Cocktails> cocktails = new ArrayList<>();
 
     public void addCocktail(Cocktails cocktail){
@@ -29,11 +30,11 @@ public class Bar {
         return cocktails;
     }
 
-    public void addIngredient(String name, int count) {
-        stock.put(name, stock.getOrDefault(name,0) + count);
-    }
+//    public void addIngredient(String name, int count) {
+//        stock.put(name, stock.getOrDefault(name,0) + count);
+//    }
 
-    public void sellCocktail(String name, int count) {
+    /*public void sellCocktail(String name, int count) {
         Cocktails cocktail = findCocktail(name);
         if (cocktail == null) {
             System.out.println("Рецепт '" + name + "' не найден");
@@ -58,16 +59,48 @@ public class Bar {
             }
             System.out.println("Коктейль продан: " + cocktail.getName() + " в количестве " + count);
         }
-    }
+    }*/
 
-    public void listStock() {
-        if (stock.isEmpty()) {
-            System.out.println("Склад пуст");
-        } else {
-            for (Map.Entry<String, Integer> entry : stock.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
+    public void sellCocktail (String name, int count) {
+        Cocktails cocktail = findCocktail(name);
+        if (cocktail == null) {
+            System.out.println("Рецепт '" + name + "' не найден");
+            return;
+        }
+        StockDAO stockDAO = new StockDAO();
+        boolean enough = true;
+
+        for(Map.Entry<String, Integer> entry : cocktail.getIngredients().entrySet()) {
+            String ingredient = entry.getKey();
+            int need = entry.getValue() * count;
+            Stock stock = stockDAO.findByIngredient(ingredient);
+            if (stock == null || stock.getQuantity() < need) {
+                int have = stock != null ? stock.getQuantity() : 0;
+                System.out.println("Не хватает: " + ingredient + " (" + (need - have) + ")");
+                enough = false;
             }
         }
+
+        if (enough) {
+            for (Map.Entry<String,Integer> entry : cocktail.getIngredients().entrySet()) {
+                String ingredient = entry.getKey();
+                int need = entry.getValue() * count;
+                Stock stock = stockDAO.findByIngredient(ingredient);
+                int newQuantity = stock.getQuantity() - need;
+                stockDAO.updateQuantity(ingredient, newQuantity); //Списание ингредиентов тут
+            }
+            System.out.println("Коктейль продан: " + cocktail.getName() + " в количестве " + count);
+        }
     }
+
+//    public void listStock() {
+//        if (stock.isEmpty()) {
+//            System.out.println("Склад пуст");
+//        } else {
+//            for (Map.Entry<String, Integer> entry : stock.entrySet()) {
+//                System.out.println(entry.getKey() + ": " + entry.getValue());
+//            }
+//        }
+//    }
 
 }

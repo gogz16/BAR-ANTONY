@@ -70,4 +70,5 @@ public class RecipesMenu {
             System.out.println("Рецепт не найден");
         }
     }
+
 }

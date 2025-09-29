@@ -15,7 +15,7 @@ public class MainMenu {
         while (true) {
             System.out.println("\n=== Главное меню ===");
             System.out.println("1. Работа с коктейлями");
-            System.out.println("2. Управление запасами (Еще не готово, выводит просто склад)");
+            System.out.println("2. Управление запасами");
             System.out.println("3. Продажа коктейля");
             System.out.println("0. Выход");
             System.out.print("Выберите пункт: ");
@@ -29,7 +29,8 @@ public class MainMenu {
                     recipesMenu.show();
                     break;
                 case 2:
-                    bar.listStock(); // пока просто вывод остатков
+                    StockMenu stockMenu = new StockMenu(scanner, new StockDAO());
+                    stockMenu.show();
                     break;
                 case 3:
                     SaleMenu saleMenu = new SaleMenu(scanner, bar);
