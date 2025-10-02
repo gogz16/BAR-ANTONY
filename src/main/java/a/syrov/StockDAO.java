@@ -12,7 +12,9 @@ public class StockDAO {
     Datasource datasource = Datasource.INSTANCE;
 
     public void save(Stock stock) {
-        try (Connection connection = datasource.getConnection()){
+        Connection connection = null;
+        try {
+            connection = datasource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO warehouse.stock " +
                     "(id,ingredient, quantity) " +
                     "VALUES (?,?,?)");
@@ -20,40 +22,52 @@ public class StockDAO {
             preparedStatement.setString(2, stock.getIngredient());
             preparedStatement.setInt(3, stock.getQuantity());
             preparedStatement.execute();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            datasource.releaseConnection(connection);
         }
     }
 
     public List<Stock> getAll() {
         List<Stock> stocks = new ArrayList<>();
-        try (Connection connection = datasource.getConnection()){
+        Connection connection = null;
+        try {
+            connection = datasource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM warehouse.stock");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Stock stock = new Stock(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3));
                 stocks.add(stock);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            datasource.releaseConnection(connection);
         }
         return stocks;
     }
 
     public void updateQuantity(String ingredient, int newQuantity) {
-        try (Connection connection = datasource.getConnection()){
+        Connection connection = null;
+        try {
+            connection = datasource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE warehouse.stock SET quantity = ? WHERE ingredient = ?");
             preparedStatement.setInt(1,newQuantity);
             preparedStatement.setString(2,ingredient);
             preparedStatement.executeUpdate();
             }
-        catch (SQLException e) {
+        catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            datasource.releaseConnection(connection);
         }
     }
 
     public Stock findByIngredient(String ingredient) {
-        try (Connection connection = datasource.getConnection()){
+        Connection connection = null;
+        try {
+            connection = datasource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM warehouse.stock WHERE ingredient = ?");
             preparedStatement.setString(1,ingredient);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -62,8 +76,10 @@ public class StockDAO {
                         resultSet.getString("ingredient"),
                         resultSet.getInt("quantity"));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            datasource.releaseConnection(connection);
         }
         return null;
     }
