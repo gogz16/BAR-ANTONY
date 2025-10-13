@@ -1,14 +1,26 @@
 package a.syrov;
 
+import a.syrov.warehouse.component.ClientHandler;
 import a.syrov.warehouse.dao.StockDAO;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-         Bar bar = new Bar();
-        StockDAO stockDAO = new StockDAO();
+    public static void main(String[] args) throws IOException {
+        try (ServerSocket serverSocket = new ServerSocket(8080)) {
+            System.out.println("Server started");
+            while (true) {
+                Socket client = serverSocket.accept();
+                Thread thread = new Thread(new ClientHandler(client));
+                thread.start();
+            }
+        }
+    //    Scanner scanner = new Scanner(System.in);
+    //     Bar bar = new Bar();
+     //   StockDAO stockDAO = new StockDAO();
 
 //        stockDAO.save(new Stock(1,"Rum",50));  //  Добавление в таблицу, перед удалением комментария DELETE FROM stock из консоли
 //        stockDAO.save(new Stock(2,"Vodka",50));
@@ -26,7 +38,9 @@ public class Main {
         bar.addIngredient("Juice", 40);
         bar.addIngredient("Milk", 30);
 
-        */Map<String, Integer> mojitoRecipe = new HashMap<>();
+        */
+
+        /*Map<String, Integer> mojitoRecipe = new HashMap<>();
         mojitoRecipe.put("Rum", 10);
         mojitoRecipe.put("Mint", 5);
         mojitoRecipe.put("Sugar", 3);
@@ -47,7 +61,10 @@ public class Main {
 
 
         MainMenu menu = new MainMenu(scanner, bar);
-        menu.show();
+        menu.show(); */
+
+
+
 
         /*stockDAO.save(new Stock(1,"Rum",50));  //  Добавление в таблицу
         stockDAO.save(new Stock(2,"Vodka",50));
