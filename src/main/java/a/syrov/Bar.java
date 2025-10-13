@@ -1,6 +1,9 @@
 package a.syrov;
 
 //import java.sql.SQLOutput;
+import a.syrov.warehouse.dao.StockDAO;
+import a.syrov.warehouse.entity.Stock;
+
 import java.util.*;
 
 public class Bar {

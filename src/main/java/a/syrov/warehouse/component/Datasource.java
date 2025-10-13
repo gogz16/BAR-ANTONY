@@ -1,4 +1,4 @@
-package a.syrov;
+package a.syrov.warehouse.component;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 

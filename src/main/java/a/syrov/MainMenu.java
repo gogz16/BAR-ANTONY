@@ -1,5 +1,7 @@
 package a.syrov;
 
+import a.syrov.warehouse.dao.StockDAO;
+
 import java.util.Scanner;
 
 public class MainMenu {

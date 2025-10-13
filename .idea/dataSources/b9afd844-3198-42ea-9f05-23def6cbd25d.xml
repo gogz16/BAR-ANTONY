@@ -1075,6 +1075,10 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="mysql">
+      <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
+      <Grants>user|||mysql.session|localhost|SELECT|G</Grants>
+      <LastIntrospectionLevel>3</LastIntrospectionLevel>
+      <LastIntrospectionLocalTimestamp>2025-10-13.10:37:17</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="performance_schema">
@@ -1086,7 +1090,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="292" parent="1" name="warehouse">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-09-28.15:02:19</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-10-13.10:39:57</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="293" parent="1" name="mysql.infoschema">

@@ -1,4 +1,4 @@
-package a.syrov;
+package a.syrov.warehouse.entity;
 
 public class Stock {
     private int id;
