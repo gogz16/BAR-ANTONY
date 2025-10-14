@@ -10,37 +10,12 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        try (ServerSocket serverSocket = new ServerSocket(8080)) {
-            System.out.println("Server started");
-            while (true) {
-                Socket client = serverSocket.accept();
-                Thread thread = new Thread(new ClientHandler(client));
-                thread.start();
-            }
-        }
-    //    Scanner scanner = new Scanner(System.in);
-    //     Bar bar = new Bar();
-     //   StockDAO stockDAO = new StockDAO();
+        Scanner scanner = new Scanner(System.in);
+        Bar bar = new Bar();
+        StockDAO stockDAO = new StockDAO();
 
-//        stockDAO.save(new Stock(1,"Rum",50));  //  Добавление в таблицу, перед удалением комментария DELETE FROM stock из консоли
-//        stockDAO.save(new Stock(2,"Vodka",50));
-//        stockDAO.save(new Stock(3,"Cola",200));
-//        stockDAO.save(new Stock(4,"Mint",30));
-//        stockDAO.save(new Stock(5,"Sugar",20));
-//        stockDAO.save(new Stock(6,"Juice",40));
-//        stockDAO.save(new Stock(7,"Milk",30));
 
-       /* bar.addIngredient("Rum", 50);
-        bar.addIngredient("Vodka", 50);
-        bar.addIngredient("Cola", 200);
-        bar.addIngredient("Mint", 30);
-        bar.addIngredient("Sugar", 20);
-        bar.addIngredient("Juice", 40);
-        bar.addIngredient("Milk", 30);
-
-        */
-
-        /*Map<String, Integer> mojitoRecipe = new HashMap<>();
+        Map<String, Integer> mojitoRecipe = new HashMap<>();
         mojitoRecipe.put("Rum", 10);
         mojitoRecipe.put("Mint", 5);
         mojitoRecipe.put("Sugar", 3);
@@ -59,12 +34,40 @@ public class Main {
         System.out.println("\n=== Доступные рецепты ===");
         bar.listCocktails();
 
+        new Thread(() -> {
+            try (ServerSocket serverSocket = new ServerSocket(8080)) {
+                System.out.println("Server started on port 8080");
+                while (true) {
+                    Socket client = serverSocket.accept();
+                    Thread thread = new Thread(new ClientHandler(client));
+                    thread.start();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
 
         MainMenu menu = new MainMenu(scanner, bar);
-        menu.show(); */
+        menu.show();
 
+     /*   stockDAO.save(new Stock(1,"Rum",50));  //  Добавление в таблицу, перед удалением комментария DELETE FROM stock из консоли
+        stockDAO.save(new Stock(2,"Vodka",50));
+        stockDAO.save(new Stock(3,"Cola",200));
+        stockDAO.save(new Stock(4,"Mint",30));
+        stockDAO.save(new Stock(5,"Sugar",20));
+        stockDAO.save(new Stock(6,"Juice",40));
+        stockDAO.save(new Stock(7,"Milk",30)); */
 
+       /* bar.addIngredient("Rum", 50);
+        bar.addIngredient("Vodka", 50);
+        bar.addIngredient("Cola", 200);
+        bar.addIngredient("Mint", 30);
+        bar.addIngredient("Sugar", 20);
+        bar.addIngredient("Juice", 40);
+        bar.addIngredient("Milk", 30);
 
+        */
 
         /*stockDAO.save(new Stock(1,"Rum",50));  //  Добавление в таблицу
         stockDAO.save(new Stock(2,"Vodka",50));
